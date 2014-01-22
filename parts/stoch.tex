@@ -1,3 +1,36 @@
+\begin{frame}
+ \frametitle{Stochastic Point of View}
+Adopting a \textcolor{red}{stochastic} point of view allow us to:
+\begin{itemize}
+ \item Get global perspectives
+ \item Access properties of PDF (moments, covariances)
+ \item Apply new analysis tools
+ \item Obtain ``most likely'' information
+\end{itemize}
+
+\begin{columns}
+\column{0.05\textwidth}
+\hfill
+ \column{0.5\textwidth}
+\visible<2>{ \begin{block}{Questions}
+
+ \begin{itemize}
+ \item How to access this information given a PH model?
+ \item Exploit/Avoid properties inherent in PH?
+ \item Immediate benefits?
+\end{itemize}
+\end{block}
+}
+ \column{0.40\textwidth}
+  \includegraphics[trim=0mm 0mm -50mm 0mm, width=70mm,height=50mm]{./figures/MH_probab_plot.jpg}
+\column{0.05\textwidth}
+\hfill
+\end{columns}
+
+
+
+\end{frame}
+
 
 \begin{frame}
  \frametitle{Stochastic Point of View}
@@ -6,6 +39,8 @@
 \frac{\partial \Phi(z_c,t)}{\partial t} = \sum_j  a_j(z_o,t)\Phi(z_o,t) -\sum_k a_k(z_c,t)\Phi(z_c,t)
 \]
 \begin{columns}
+\column{0.05\textwidth}
+\hfill
  \column{0.5\textwidth}
  \textcolor{blue}{Multivariate Bernoulli Distribution}
  \begin{itemize}
@@ -16,8 +51,8 @@
  Stochastic Simulation (PINT)\\
  Numerical Techniques
  \column{0.40\textwidth}
-  \includegraphics[trim=0mm 0mm -50mm 0mm, width=70mm,height=50mm]{../figures/MH_probab_plot.jpg}
-\column{0.1\textwidth}
+  \includegraphics[trim=0mm 0mm -50mm 0mm, width=70mm,height=50mm]{./figures/MH_probab_plot.jpg}
+\column{0.05\textwidth}
 \hfill
 \end{columns}
 
@@ -33,13 +68,14 @@
   \item $N^{N_{sp}}\rightarrow M\left( N\times N_{sp} \right)$
   \item Easy transition to parametric models
  \end{itemize}
- \vspace{1cm}
-\textcolor{blue}{Future}: \textcolor{red}{Moment Closure/ PGD Hybrids}
+ 
+ \begin{block}{Future: \textcolor{red}{Moment Closure/ PGD Hybrids}}
+
 \begin{itemize}
  \item Use static analysis to determine required Cooperative Sorts
  \item Combine initial solution of PGD to Moment Closure Scheme
  \item Potential pitfalls in scalability, production of equations
 \end{itemize}
-
+\end{block}
 
 \end{frame}
