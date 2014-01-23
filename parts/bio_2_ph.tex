@@ -427,6 +427,116 @@ Allow \tval{cooperation} between two genes
 
 \end{frame}
 
+
+
+\begin{frame}[t]
+  \frametitle{Static analysis: successive reachability}
+  \framesubtitle{\tcite{PMR12-MSCS}}
+
+Successive reachability of processes:
+
+\begin{columns}
+\begin{column}{0.55\textwidth}
+
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}
+%\path[use as bounding box] (-1,-3) rectangle (7,2);
+\exatt
+
+\TState{2-4}{a_0,b_0,b_2,c_0,d_0}
+
+\TState{5}{a_0,b_0,c_0,d_0}
+\TState{6}{a_0,b_0,c_1,d_0}
+\TState{7}{a_0,b_1,c_1,d_0}
+\TState{8}{a_0,b_1,c_1,d_1}
+\TState{9}{a_0,b_1,c_1,d_2}
+
+\node<3>[process,very thick] (d_1) at (d_1.center) {1?};
+\node<3>[process,very thick] (b_1) at (b_1.center) {2?};
+\node<3>[process,very thick] (d_2) at (d_2.center) {3?};
+
+\node<4-8>[process,very thick] (d_2) at (d_2.center) {1?};
+\node<9>[process,very thick] (d_2) at (d_2.center) {};
+
+\only<5>{\THit{a_0}{hlhit}{c_0}{.north}{c_1}}
+\path<5>[bounce,bend left,hlhit] \TBounce{c_0}{}{c_1}{.west};
+\only<6>{\THit{c_1}{bend left=20pt,hlhit}{b_0}{.west}{b_1}}
+\path<6>[bounce,bend left,hlhit] \TBounce{b_0}{}{b_1}{.south};
+\only<7>{\THit{b_0}{hlhit}{d_0}{.west}{d_1}}
+\path<7>[bounce,bend left,hlhit] \TBounce{d_0}{}{d_1}{.south};
+\only<8>{\THit{b_1}{hlhit}{d_1}{.west}{d_2}}
+\path<8>[bounce,bend left,hlhit] \TBounce{d_1}{}{d_2}{.south};
+\end{tikzpicture}
+}
+\end{center}
+
+\end{column}
+\begin{column}{0.45\textwidth}
+
+\pause
+\begin{itemize}
+  \item Initial context
+    \\ \rex{\PHetat{a_1, \{b_0, b_1\}, c_0, z_0}} \pause
+  \item Objectives
+    \\ \rex{$[\ \Rsh d_1 \PHconcat\ \Rsh b_1 \PHconcat\ \Rsh d_2\ ]$} \pause
+    \\\smallskip \rex{$[\ \Rsh d_2\ ]$} \pause
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+\begin{center}
+\f Concretization of the objective = scenario
+
+\ex{
+\only<5>{\underline{$\PHfrappe{a_0}{c_0}{c_1}$}}\only<-4,6->{$\PHfrappe{a_0}{c_0}{c_1}$}~\PHconcat~
+\only<6>{\underline{$\PHfrappe{b_0}{d_0}{d_1}$}}\only<-5,7->{$\PHfrappe{b_0}{d_0}{d_1}$}~\PHconcat~
+\only<7>{\underline{$\PHfrappe{c_1}{b_0}{b_1}$}}\only<-6,8->{$\PHfrappe{c_1}{b_0}{b_1}$}~\PHconcat~
+\only<8>{\underline{$\PHfrappe{b_1}{d_1}{d_2}$}}\only<-7,9->{$\PHfrappe{b_1}{d_1}{d_2}$}}
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}[t]
+  \frametitle{Over- and Under-approximations}
+  \framesubtitle{\tcite{PMR12-MSCS}}
+
+Check approximations $P$ and $Q$, where \tval{$P \Rightarrow R \Rightarrow Q$}:
+
+\begin{center}
+\scalebox{0.5}{
+\figsa
+}
+\end{center}
+
+\uncover<8->{
+Linear w.r.t.~\#sorts and exponential w.r.t.~\#processes in each sort
+%\begin{fleches}
+%  \item Efficient for big models with few levels of expression
+%\end{fleches}
+}
+
+\uncover<9->{
+\begin{center}
+\scalebox{0.8}{
+\begin{tabular}{|r||c|c|c|c||c|c|c|}
+\hline
+Model & sorts & procs & actions & states & Biocham & libddd & \Pint \\\hline
+egfr20 & 35 & 196 & 670 & $2^{64}$ & [3s-KO] & [1s-150s] & \tval{0.007s} \\\hline
+tcrsig40 & 54 & 156 & 301 & $2^{73}$ & [1s-KO] & [0.6s-KO] & \tval{0.004s} \\\hline
+tcrsig94 & 133 & 448 & 1124 & $2^{194}$ & KO & KO & \tval{0.030s} \\\hline
+egfr104 & 193 & 748 &  2356 & $2^{320}$ &  KO & KO & \tval{0.050s} \\\hline
+\end{tabular}
+}
+\end{center}
+}
+\end{frame}
+
+
+
 \begin{frame}[c]
   \frametitle{The Process Hitting modeling}
 
@@ -440,7 +550,7 @@ Allow \tval{cooperation} between two genes
 
   \item Efficient \tval{static analysis}
   \begin{fleches}
-    \item Reachability of a process can be computed in \tval{linear time}\\
+    \item Reachability of a process can be computed in \tval{polynomial time}\\
           \quad in the number of sorts
   \end{fleches}
 
